@@ -5,17 +5,16 @@ import Card from "../Card";
 import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
 
 export default function List({ data }) {
-  const [dataAPI, setDataAPI] = useState(data);
+  const [dataAPI, setDataAPI] = useState(data.cards);
 
   const handleDragEnd = (result) => {
     if (!result.destination) return;
     const items = Array.from(dataAPI);
+
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-
     setDataAPI(items);
   };
-
   return (
     <ListContainer done={data.done}>
       <header>
@@ -31,7 +30,7 @@ export default function List({ data }) {
         <Droppable droppableId={"list"}>
           {(provided) => (
             <ul {...provided.droppableProps} ref={provided.innerRef}>
-              {dataAPI.cards.map((card, index) => {
+              {dataAPI.map((card, index) => {
                 return (
                   <Draggable
                     key={card.id}

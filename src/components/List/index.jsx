@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { ListContainer } from "./style";
-import { MdAdd } from "react-icons/md";
+import { ListContainer, TextAreaContainer, CloseAddCard } from "./style";
+import { MdAdd, MdClose } from "react-icons/md";
 import Card from "../Card";
 import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
+import { v4 as uuid } from "uuid";
 
 export default function List({ data }) {
   const [dataAPI, setDataAPI] = useState(data.cards);
+  const [showTextArea, setShowTextArea] = useState(false);
 
   const handleDragEnd = (result) => {
     if (!result.destination) return;
@@ -15,16 +17,22 @@ export default function List({ data }) {
     items.splice(result.destination.index, 0, reorderedItem);
     setDataAPI(items);
   };
+  const add = {
+    id: uuid(),
+    content: "Teste",
+    labels: ["#54e1f7"],
+    user: "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/profile.png",
+  };
+
+  const handleAddCard = () => {
+    //setDataAPI([...dataAPI, add]);
+    setShowTextArea(true);
+  };
+
   return (
     <ListContainer done={data.done}>
       <header>
         <h2>{data.title}</h2>
-
-        {data.creatable && (
-          <button type="button">
-            <MdAdd size={24} color="#fff" />
-          </button>
-        )}
       </header>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId={"list"}>
@@ -54,6 +62,31 @@ export default function List({ data }) {
           )}
         </Droppable>
       </DragDropContext>
+      <div>
+        {showTextArea ? (
+          <TextAreaContainer>
+            <textarea
+              name=""
+              id=""
+              cols="30"
+              rows="5"
+              placeholder="Insira o texto para esse cartão"
+            />
+            <button> Adicionar Cartão</button>
+            <CloseAddCard onClick={() => setShowTextArea(false)}>
+              <MdClose />
+            </CloseAddCard>
+          </TextAreaContainer>
+        ) : (
+          ""
+        )}
+      </div>
+      {data.creatable && (
+        <button type="button" onClick={handleAddCard}>
+          <MdAdd size={24} color="#fff" />
+          Adicionar lista
+        </button>
+      )}
     </ListContainer>
   );
 }

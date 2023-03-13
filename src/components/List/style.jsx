@@ -20,16 +20,36 @@ export const ListContainer = styled.div`
       font-size: 16px;
       padding: 0 10px;
     }
-    button {
-      width: 42px;
-      height: 42px;
-      border-radius: 18px;
-      background: #3b5bfd;
-      border: 0;
-      cursor: pointer;
-    }
   }
   ul {
     margin-top: 30px;
   }
+  button {
+    width: 100%;
+    height: 42px;
+    background: #7159c1;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+`;
+export const TextAreaContainer = styled.div`
+  width: 100%;
+  background: #fff;
+
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 15px;
+  box-shadow: 0 1px 4px 0 rgba(192, 208, 230, 0.8);
+  border-top: 20px solid rgba(230, 236, 245, 0.4);
+  textarea {
+    border: 0;
+  }
+`;
+export const CloseAddCard = styled.button`
+  background: #fff;
 `;

@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { ListContainer, TextAreaContainer, CloseAddCard } from "./style";
+import {
+  ListContainer,
+  TextAreaContainer,
+  CloseAddCard,
+  OpenAddCard,
+  AddCard,
+} from "./style";
 import { MdAdd, MdClose } from "react-icons/md";
 import Card from "../Card";
 import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
@@ -72,20 +78,25 @@ export default function List({ data }) {
               rows="5"
               placeholder="Insira o texto para esse cartão"
             />
-            <button> Adicionar Cartão</button>
-            <CloseAddCard onClick={() => setShowTextArea(false)}>
-              <MdClose />
-            </CloseAddCard>
+            <div className="btarea">
+              <AddCard> Adicionar Cartão</AddCard>
+
+              <CloseAddCard onClick={() => setShowTextArea(false)}>
+                <MdClose />
+              </CloseAddCard>
+            </div>
           </TextAreaContainer>
         ) : (
           ""
         )}
       </div>
-      {data.creatable && (
-        <button type="button" onClick={handleAddCard}>
-          <MdAdd size={24} color="#fff" />
+      {!showTextArea ? (
+        <OpenAddCard type="button" onClick={handleAddCard}>
+          <MdAdd size={24} color="#5e6c84" />
           Adicionar lista
-        </button>
+        </OpenAddCard>
+      ) : (
+        ""
       )}
     </ListContainer>
   );

@@ -40,12 +40,11 @@ export function loadLists() {
     },
     {
       title: "Fazendo",
-      creatable: false,
       cards: [],
     },
     {
       title: "Pausado",
-      creatable: false,
+      creatable: true,
       cards: [],
     },
   ];

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   ListContainer,
   TextAreaContainer,
@@ -9,39 +9,20 @@ import {
 import { MdAdd, MdClose } from "react-icons/md";
 import Card from "../Card";
 import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
-import { v4 as uuid } from "uuid";
+import { MyTrelloContext } from "../context";
 
 export default function List({ data }) {
-  const [dataAPI, setDataAPI] = useState(data.cards);
-  const [showTextArea, setShowTextArea] = useState(false);
-  const [textCard, setTextCard] = useState("");
+  const {
+    handleDragEnd,
+    dataAPI,
+    showTextArea,
+    setShowTextArea,
+    textCard,
+    setTextCard,
+    handleOpenAddCard,
+    handleAddCard,
+  } = useContext(MyTrelloContext);
 
-  const handleDragEnd = (result) => {
-    if (!result.destination) return;
-    const items = Array.from(dataAPI);
-
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setDataAPI(items);
-  };
-
-  const handleOpenAddCard = () => {
-    //setDataAPI([...dataAPI, add]);
-    setShowTextArea(true);
-  };
-
-  const handleAddCard = () => {
-    setDataAPI([
-      ...dataAPI,
-      {
-        id: uuid(),
-        content: textCard,
-        labels: ["#0079bf"],
-        user: "https://api.dicebear.com/5.x/adventurer/svg?seed=Snuggles",
-      },
-    ]);
-    setTextCard("");
-  };
   return (
     <ListContainer done={data.done}>
       <header>

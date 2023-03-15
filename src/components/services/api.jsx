@@ -38,7 +38,7 @@ export function loadLists() {
         },
       ],
     },
-    {
+    /*{
       title: "Fazendo",
       cards: [],
     },
@@ -46,6 +46,6 @@ export function loadLists() {
       title: "Pausado",
       creatable: true,
       cards: [],
-    },
+    },*/
   ];
 }

@@ -14,6 +14,7 @@ import { v4 as uuid } from "uuid";
 export default function List({ data }) {
   const [dataAPI, setDataAPI] = useState(data.cards);
   const [showTextArea, setShowTextArea] = useState(false);
+  const [textCard, setTextCard] = useState("");
 
   const handleDragEnd = (result) => {
     if (!result.destination) return;
@@ -23,18 +24,24 @@ export default function List({ data }) {
     items.splice(result.destination.index, 0, reorderedItem);
     setDataAPI(items);
   };
-  const add = {
-    id: uuid(),
-    content: "Teste",
-    labels: ["#54e1f7"],
-    user: "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/profile.png",
-  };
 
-  const handleAddCard = () => {
+  const handleOpenAddCard = () => {
     //setDataAPI([...dataAPI, add]);
     setShowTextArea(true);
   };
 
+  const handleAddCard = () => {
+    setDataAPI([
+      ...dataAPI,
+      {
+        id: uuid(),
+        content: textCard,
+        labels: ["#0079bf"],
+        user: "https://api.dicebear.com/5.x/adventurer/svg?seed=Snuggles",
+      },
+    ]);
+    setTextCard("");
+  };
   return (
     <ListContainer done={data.done}>
       <header>
@@ -77,9 +84,11 @@ export default function List({ data }) {
               cols="30"
               rows="5"
               placeholder="Insira o texto para esse cartão"
+              value={textCard}
+              onChange={(e) => setTextCard(e.target.value)}
             />
             <div className="btarea">
-              <AddCard> Adicionar Cartão</AddCard>
+              <AddCard onClick={handleAddCard}> Adicionar Cartão</AddCard>
 
               <CloseAddCard onClick={() => setShowTextArea(false)}>
                 <MdClose />
@@ -91,7 +100,7 @@ export default function List({ data }) {
         )}
       </div>
       {!showTextArea ? (
-        <OpenAddCard type="button" onClick={handleAddCard}>
+        <OpenAddCard type="button" onClick={handleOpenAddCard}>
           <MdAdd size={24} color="#5e6c84" />
           Adicionar lista
         </OpenAddCard>

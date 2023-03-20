@@ -72,11 +72,13 @@ export const AddCard = styled.button`
   border: 0;
   border-radius: 3px;
   height: 40px;
-
   cursor: pointer;
   &:hover {
     background: var(--ds-background-brand-bold, #0068a5);
     transition-duration: 85ms;
+  }
+  & :disabled {
+    background: var(--ds-background-brand-bold, #dde1e4);
   }
 `;
 export const CloseAddCard = styled.button`

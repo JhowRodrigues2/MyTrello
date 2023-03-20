@@ -8,8 +8,9 @@ const lists = loadLists();
 
 export const MyTrelloContextProvider = ({ children }) => {
   const [dataAPI, setDataAPI] = useState(lists[0].cards);
-  const [showTextArea, setShowTextArea] = useState(false);
+  const [showTextArea, setShowTextArea] = useState(true);
   const [textCard, setTextCard] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const handleDragEnd = (result) => {
     if (!result.destination) return;
@@ -21,6 +22,16 @@ export const MyTrelloContextProvider = ({ children }) => {
 
   const handleOpenAddCard = () => {
     setShowTextArea(true);
+  };
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setTextCard(value);
+    if (value !== "") {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
   };
 
   const handleAddCard = () => {
@@ -35,6 +46,7 @@ export const MyTrelloContextProvider = ({ children }) => {
     ]);
     setTextCard("");
   };
+
   return (
     <MyTrelloContext.Provider
       value={{
@@ -47,6 +59,8 @@ export const MyTrelloContextProvider = ({ children }) => {
         setShowTextArea,
         textCard,
         setTextCard,
+        handleInputChange,
+        isDisabled,
       }}
     >
       {children}

@@ -21,8 +21,14 @@ export default function List({ data }) {
     setTextCard,
     handleOpenAddCard,
     handleAddCard,
+    handleInputChange,
+    isDisabled,
   } = useContext(MyTrelloContext);
 
+  /*
+  
+  corrigir bug de não deixar adicionar card em branco.
+  */
   return (
     <ListContainer done={data.done}>
       <header>
@@ -66,10 +72,12 @@ export default function List({ data }) {
               rows="5"
               placeholder="Insira o texto para esse cartão"
               value={textCard}
-              onChange={(e) => setTextCard(e.target.value)}
+              onChange={handleInputChange}
             />
             <div className="btarea">
-              <AddCard onClick={handleAddCard}> Adicionar Cartão</AddCard>
+              <AddCard onClick={handleAddCard} disabled={isDisabled}>
+                Adicionar Cartão
+              </AddCard>
 
               <CloseAddCard onClick={() => setShowTextArea(false)}>
                 <MdClose />
